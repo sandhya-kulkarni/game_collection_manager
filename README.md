@@ -1,6 +1,6 @@
-#Submission 1 Requirements, Design and Team
+# Submission 1 : Requirements, Design and Team
 
-This submission should contain:
+Assessment involves discussion of [this product spec](spec.md); with the first submission containing:
 
 * Requirements engineering
     * Functional requirements
@@ -16,27 +16,27 @@ This submission should contain:
 
 * Team structure and role assignment
 
-##Requirements Engineering (30 Marks)
+## Requirements Engineering (30 Marks)
 
 This section should describe the methods of requirements capture used and any alternatives that would also have been possible, and appropriate, to use. 
 
 These methods should include the source of any requirements and the broad profiles of any people involved. The analysis of the requirements should produce a set of prioritised functional and non-functional requirements for the prototype.
 
-##Software Design (30 Marks)
+## Software Design (30 Marks)
 
 These requirements should be used to create a design for the prototype. This design should indicate which features of the design satisfies which requirements. The design should include a technology breakdown, component and system design and implementation paths.
 
-##User Interface Design (25 Marks)
+## User Interface Design (25 Marks)
 
 This should be a user interface design, it does not need to be a functional product. It should have the control flow for the product, the user interaction detailed and the reasoning behind the design. This will include alternatives that have been considered.
 
 The design should consider how it addresses accessibility criteria for users with different accessibility requirements.
 
-##Team Structure and Role Assignment (15 Marks)
+## Team Structure and Role Assignment (15 Marks)
 
 This section should contain the team structure that is employed in the assignment, including identified roles that the team members are assigned to and why. It should contain communication processes and how work is assigned to the team.
 
-##Marking
+## Marking
 
 Task Weighting
 

@@ -1,6 +1,6 @@
-#Product Description
+# Product Description
 
-##Game Collection Management and Sourcing System
+## Game Collection Management and Sourcing System
 
 Board games (such as Pandemic, Wingspan, Space Base), , miniature war games (such as
 Infinity, Age of Sigmar, Malifaux), card games (such as Magic the Gathering, Keyforge,
