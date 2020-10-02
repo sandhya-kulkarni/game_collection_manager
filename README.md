@@ -2,16 +2,19 @@
 
 This submission should contain:
 
-• Requirements engineering:
-	o Functional requirements
-	o Non-functional requirements
-	o Capture methodology
-	o Prioritisation
-• Design of software :
-	o architecture,
-	o component functionality	
-• Team structure and role assignment
-• A user interface design for the prototype product, including an explanation of the reasoning behind your design, alternatives and a consideration of accessibility requirements.
+* Requirements engineering
+    * Functional requirements
+	* Non-functional requirements
+	* Capture methodology
+	* Prioritisation
+	
+* Design of software:
+	* architecture
+	* component functionality	
+
+* A user interface design for the prototype product, including an explanation of the reasoning behind your design, alternatives and a consideration of accessibility requirements.
+
+* Team structure and role assignment
 
 ##Requirements Engineering (30 Marks)
 
