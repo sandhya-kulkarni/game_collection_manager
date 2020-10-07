@@ -20,7 +20,7 @@ I am taking High performance computing course along with software development co
 
 ---
 
-## [Behineh Khosravi]
+## Behineh Khosravi
 
 Hi,
 
