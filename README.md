@@ -40,9 +40,35 @@ This section should contain the team structure that is employed in the assignmen
 
 Task Weighting
 
-Requirements Engineering 30
-Software Design 30
-User Interface Design 25
-Team Structure and Role Assignment 15
-Quality of Presentation 5
-Total 100
+* Requirements Engineering 30
+* Software Design 30
+* User Interface Design 25
+* Team Structure and Role Assignment 15
+* Quality of Presentation 5
+* Total 100
+
+
+# Submission 2 Development Plan
+
+This submission should contain:
+* Project	planning	including	major	task	breakdown	and	time/effort	estimates.
+* Risk	analysis	including	risk	analysis	method	applied,	risks	identified	and	risk mitigation	strategies
+
+## Planning and Scheduling
+The planning section should contain the set of tasks required to complete the development of the prototype. This should incorporate the tasks required to complete the prototype and evaluation in the assessment. 
+Each task should have a time effort estimate – where a task is complete it should have an actual time effort elapsed value. 
+The tasks should include dependencies and team members assigned to each task.
+This section should include task descriptions and a Gantt Chart.
+This should include any changes to team structures or changes to design.
+
+## Risk Analysis
+This section should be a summary of risk analysis methods employed, risks identified and applied risk mitigation strategies. 
+This forms the risk register for the project. These risks should have their impact on the project detailed, including general effects and specific task and component impacts.
+
+## Marking
+Task Weighting
+
+* Planning and Scheduling 45
+* Risk Analysis 50
+* Quality of Presentation 5
+* Total 100
