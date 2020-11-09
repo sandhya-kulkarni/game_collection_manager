@@ -48,7 +48,7 @@ Task Weighting
 * Total 100
 
 
-# Submission 2 Development Plan
+# Submission 2 :Development Plan
 
 This submission should contain:
 * Project	planning	including	major	task	breakdown	and	time/effort	estimates.
