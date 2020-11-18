@@ -1,0 +1,8 @@
+# pycharm ide
+.idea
+.DS_Store
+# virtual environment
+venv
+# pytest
+*/__pycache__
+*/*/__pycache__
