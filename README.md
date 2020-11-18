@@ -1,74 +1,83 @@
-# Submission 1 : Requirements, Design and Team
+# Recommendation System
 
-Assessment involves discussion of [this product spec](spec.md); with the first submission containing:
+The recommendation system has been identified by the team as one of the main differentiating features of the product and has been chosen as one worthy of prototyping before full development.
 
-* Requirements engineering
-    * Functional requirements
-	* Non-functional requirements
-	* Capture methodology
-	* Prioritisation
-	
-* Design of software:
-	* architecture
-	* component functionality	
+The team recognises proper structuring and processing of data as the central tenant to the success of such a system, so has decided to prioritise a command line interface (CLI) for the initial epic to maximise the team’s capacity in this regard.
 
-* A user interface design for the prototype product, including an explanation of the reasoning behind your design, alternatives and a consideration of accessibility requirements.
+That said, the ultimate goal of a web app for the product has not been forgotten and many aspects of the CLI have been designed to minimise adaption to this end. Namely:
 
-* Team structure and role assignment
+* Data will be persisted to disk, though CSV files will be used instead of an SQL database, with individual files and column headings mimicking SQL tables and table headings respectively.
+* Interaction and intent with particular functionality of the CLI will follow that of REST verbs: GET, POST, PUT, and DELETE
 
-## Requirements Engineering (30 Marks)
+For more detailed information, please refer to the dedicated article on [the recommendation system](https://git.ecdf.ed.ac.uk/softdevonline2021/group_7/wikis/13.-Recommendation-System).
 
-This section should describe the methods of requirements capture used and any alternatives that would also have been possible, and appropriate, to use. 
+## Requirements
 
-These methods should include the source of any requirements and the broad profiles of any people involved. The analysis of the requirements should produce a set of prioritised functional and non-functional requirements for the prototype.
+* Python 3.x
 
-## Software Design (30 Marks)
+## Usage
 
-These requirements should be used to create a design for the prototype. This design should indicate which features of the design satisfies which requirements. The design should include a technology breakdown, component and system design and implementation paths.
+To run the recommendation system:
 
-## User Interface Design (25 Marks)
+```console
+$ python recommendation_system/cli.py -h
+```
 
-This should be a user interface design, it does not need to be a functional product. It should have the control flow for the product, the user interaction detailed and the reasoning behind the design. This will include alternatives that have been considered.
+On first usage, the local environment needs to be initialised with seed data for users, games and reviews.
 
-The design should consider how it addresses accessibility criteria for users with different accessibility requirements.
+The program will automatically use sample data provided for quick demonstration and populate the directory [data_store](data_store), though should you wish to provide alternative seed data please refer to the section [Input Files](##Input Files).
 
-## Team Structure and Role Assignment (15 Marks)
+### DICE
 
-This section should contain the team structure that is employed in the assignment, including identified roles that the team members are assigned to and why. It should contain communication processes and how work is assigned to the team.
+The recommendation system may be run on [The University of Edinburgh's Distributed Informatics Computing Environment](http://computing.help.inf.ed.ac.uk/).
 
-## Marking
+Python 3 is available on DICE by default, though requires all commands to use `python3` instead of `python`.
 
-Task Weighting
+```console
+$ python3 recommendation_system
+```
 
-* Requirements Engineering 30
-* Software Design 30
-* User Interface Design 25
-* Team Structure and Role Assignment 15
-* Quality of Presentation 5
-* Total 100
+## Input Files
 
+## Usability Testing
 
-# Submission 2 :Development Plan
+## Local Development
 
-This submission should contain:
-* Project	planning	including	major	task	breakdown	and	time/effort	estimates.
-* Risk	analysis	including	risk	analysis	method	applied,	risks	identified	and	risk mitigation	strategies
+Development tests are located in the [/tests](/recommendation_system/tests) package and require [pytest](https://docs.pytest.org/en/stable/).
 
-## Planning and Scheduling
-The planning section should contain the set of tasks required to complete the development of the prototype. This should incorporate the tasks required to complete the prototype and evaluation in the assessment. 
-Each task should have a time effort estimate – where a task is complete it should have an actual time effort elapsed value. 
-The tasks should include dependencies and team members assigned to each task.
-This section should include task descriptions and a Gantt Chart.
-This should include any changes to team structures or changes to design.
+For convenience, all development dependencies may be installed with the following:
 
-## Risk Analysis
-This section should be a summary of risk analysis methods employed, risks identified and applied risk mitigation strategies. 
-This forms the risk register for the project. These risks should have their impact on the project detailed, including general effects and specific task and component impacts.
+```console
+$ pip install -r requirements.txt
+```
 
-## Marking
-Task Weighting
+To run all tests, start pytest as a module from within the [/recommendation_system](/recommendation_system) directory:
 
-* Planning and Scheduling 45
-* Risk Analysis 50
-* Quality of Presentation 5
-* Total 100
+```console
+$ cd recommendation_system
+$ python -m pytest
+```
+
+Alternatively, you may run a specific set of tests (for instance `example.py`) with the following:
+
+```console
+$ python -m pytest tests/example.py
+```
+
+---
+
+Code consistency and standards are encouraged by the use of [pylint](https://pypi.org/project/pylint/),
+which follows the [PEP 8](https://www.python.org/dev/peps/pep-0008/) Python style guide as defined in [.pylintrc](.pylintrc).
+
+To quality check the main [recommendation_system](recommendation_system) program, run pylint as a module from within the the [/recommendation_system](/recommendation_system) directory:
+
+```console
+$ cd recommendation_system
+$ python -m pylint recommendation_system/cli.py
+```
+
+## Software Development Coursework
+
+The recommendation system has been built as part of the Software Development coursework for session 2020/21.
+
+The [original product spec](spec.md) and [coursework requirements](assessment.md) are maintained as part of the project's repository for convenience; though [the project wiki](https://git.ecdf.ed.ac.uk/softdevonline2021/group_7/wikis/home) should be used as the primary source for information.
