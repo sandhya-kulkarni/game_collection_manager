@@ -1,0 +1,21 @@
+user_id,user_name,password,date_of_birth,favourite_game_type,favourite_genre,row_creation_time_utc
+u1,Mark Fleming,Mark20,30/03/2000,Role Playing Game,Fantasy,17/11/2020 18:30
+u2,Allen knot,Allen303,26/01/1995,Board Game,Fantasy,12/11/2020 18:30
+u3,Soniya Holland,Soniya30,30/04/1990,Card Game,Other,13/11/2020 18:30
+u4,Sarah Chadwick,Sarah,22/06/1980,Card Game,Fantasy,15/11/2020 18:35
+u5,Laura Newton,Laura2,09/10/1975,Board Game,Horror,15/11/2020 12:30
+u6,Salim Khan,Salimk7,14/11/1998,Miniature War Game,War,16/11/2020 18:45
+u7,Vahap Uysal,Vahap,05/02/1985,Card Game,Fantasy,18/11/2020 18:30
+u8,Alessandro Gamba,GambaA,18/05/1997,Miniature War Game,War,17/11/2020 18:30
+u9,Akhil Kumar,Akhil23,07/07/2005,Board Game,Other,14/11/2020 13:50
+u10,Laura Gower,Laura5,07/12/2002,Role Playing Game,Horror,12/11/2020 18:30
+u11,Maya Patel,Maya99,23/09/1993,Role Playing Game,War,12/11/2020 18:30
+u12,Benjamin Berkley,Benjamin2,21/03/1989,Board Game,Other,13/11/2020 14:15
+u13,Fathima Qureshi,Fathima22,20/06/1982,Board Game,Fantasy,15/11/2020 18:30
+u14,Sophie Bartram ,Sophie,15/08/2006,Miniature War Game,Fantasy,15/11/2020 17:18
+u15,Kevin Conor,Kevin12,14/03/1988,Card Game,Other,11/11/2020 16:30
+u16,Emma Botham,Emma5,08/02/1998,Card Game,Other,11/11/2020 14:43
+u17,Rachel  Adams,Rachel6,28/10/1991,Board Game,Other,13/11/2020 18:50
+u18,Gary Emerson,Gary4,30/11/1987,Board Game,Fantasy,18/11/2020 12:30
+u19,Eli Amihud,Eli8,11/06/1994,Role Playing Game,Horror,17/11/2020 11:30
+u20,Fan Chen,Fan9,21/08/2001,Miniature War Game,War,12/11/2020 10:40
