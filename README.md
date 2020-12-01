@@ -6,77 +6,170 @@ The team recognises proper structuring and processing of data as the central ten
 
 That said, the ultimate goal of a web app for the product has not been forgotten and many aspects of the CLI have been designed to minimise adaption to this end. Namely:
 
-* Data will be persisted to disk, though CSV files will be used instead of an SQL database, with individual files and column headings mimicking SQL tables and table headings respectively.
-* Interaction and intent with particular functionality of the CLI will follow that of REST verbs: GET, POST, PUT, and DELETE
+* Data will be persisted to disk, though CSV files will be used instead of an SQL database; with individual files and initial row mimicking SQL tables and table headings respectively.
+* Interaction and intent with particular functionality of the CLI will follow that of [HTTP / RESTful verbs](#HTTP-/-RESTful-Verbs).
+
+One obvious exception is that of authentication; with the CLI assuming as though it is being run by an authorised administrator with access to all user data and the capacity to make changes on their behalf by providing a valid `--user_id`.
+ 
+> @Behineh, if you'd like to keep login / logout then we can sell this as a user impersonation feature.
 
 For more detailed information, please refer to the dedicated article on [the recommendation system](https://git.ecdf.ed.ac.uk/softdevonline2021/group_7/wikis/13.-Recommendation-System).
 
 ## Requirements
 
 * Python 3.x
+* [Pandas](https://pandas.pydata.org/)
 
 ## Usage
 
 To run the recommendation system:
 
 ```console
-$ python recommendation_system/cli.py -h
+$ python3 recommendation_system/cli.py -h
 ```
 
 On first usage, the local environment needs to be initialised with seed data for users, games and reviews.
 
 The program will automatically use sample data provided for quick demonstration and populate the directory [data_store](data_store), though should you wish to provide alternative seed data please refer to the section [Input Files](##Input Files).
 
-To run commands, the CLI accepts rest verbs via the -v (--verb) argument:
+To run commands, the CLI expects a HTTP / RESTful verb `-v / --verb`, an endpoint object `-o / --object` and optional inputs as arguments.
+
+### HTTP Verbs [-v / --verb]
+
+| Verb | Description |
+| --- | --- |
+| GET | Read a given object.<br /><br />Optional arguments are typically to filter the amount of information returned. |
+| POST | Create a new object item.<br /><br />Optional arguments are typically to associate key value pairs. |
+| PATCH | Update and modify an object item.<br /><br />Typically, this would requires at least the resource item's id by which to update along with additional optional arguments that act as key value pairs. |
+| PUT | Update and replace an object item.<br /><br />Typically, this would requires at least the resource item's id by which to update along with optional arguments that serve as key value pairs.|
+| DELETE | Delete an object item.<br /><br />Typically, this would require at least the resource item's id to delete. |
+
+### Objects [-o / --object]
+
+| Object | Description | Unique Identifier | Notable Fields |
+| --- | --- | --- | --- |
+| USERS | User records. | `user_id` | `username`, `password`, `date_of_birth`, `favourite_game_type`, `favourite_genre` |
+| GAMES | Game records.<br /><br />When queried with a `GET` request will also return data on the item's `mean` review score.| `game_id` | `game_type`, `genre`, `keywords`, `mechanic`|
+| COLLECTIONS | Associative entity for mapping user and game records. | `collection_id` | `user_id`, `game_ids` |
+
+For assistance on optional inputs available for a given object, please pass
+the help flag [-h] along with the desired option. For example:
 
 ```console
-$ python recommendation_system/cli.py -v <GET | PUT | POST | DELETE>
+$ # Optional argument help, scoped to given scenario
+$ python3 recommendation_system/cli.py -v GET -o GAMES -h
+$ # Execute Command, with optional argument --sort_by
+$ python3 recommendation_system/cli.py -v GET -o GAMES --sort_by "gameplay_score"
 ```
-you can see all functionalities currently available per each rest verb below:
 
-### GET calls
-Get calls fetch specific information from the datastore. The object to be fetched needs to be defined via the -o (--object_to_fetch) argument.
+#### Verb Object Support Matrix
 
-Currently the available objects to GET are: games and collections.
+|  | USERS | GAMES | COLLECTIONS |
+| --- | --- | --- | --- |
+| GET |  Yes | Yes+ | YES |
+| POST | Yes | No | No |
+| PATCH | No | No | YES |
+| PUT | No | No | No |
+| DELETE | No | No | Yes |
 
-#### Game(s)
-To fetch all games available in the game datastore run the command below:
+### Optional Arguments
 
-This will print out the game datastore to the console. 
+#### GET USERS
 
-You don't need to be logged in to run this command and see all games.
+| option | description | default |
+|---|---|---|
+|`--id`|Optional id to limit the information returned to a single user object| |None|
+
+#### POST USERS
+
+| option | description | required |
+|---|---|---|
+|`--username`|username provided by the user to log in or sign up|True|
+|`--password`|password provided by the user to log in or sign up.|True|
+|`--name`|full name provided by the user to sign up.|True|
+|`--date_of_birth`|date of birth provided by the user to sign up| True|
+|`--favourite_game_type`|Optional favourite game type provided by the user at sign up.<br /><br />Possible values: ["Board Game", "Card Game", "Role Playing Game", "Miniature War Game"]| |
+|`--favourite_genre`|Optional favourite game genre provided by the user at sign up.<br /><br />Possible values:["Fantasy", "Other", "Horror", "War"]| |
+
+#### GET GAMES
+
+| option | description | default |
+|---|---|---|
+|`--id`|Optional id to limit the information returned to a single game object| |None|
+|`--game_type`|Optional game type value to filter the information returned.<br /><br />Choices:["Board Game", "Card Game", "Role Playing Game", "Miniature War Game"]|None|
+|`--genre`|Optional genre value to filter the information returned.<br /><br />Choices:["Fantasy", "Other", "Horror", "War"]|None|
+|`--keywords`|Optional keyword value to filter the information returned.|None|
+|`--mechanic`|Optional mechanic value to filter the information returned.|None|
+|`--sort_by`|Optional review aspect to sort the information returned.<br /><br />Choices:["complexity_score", "gameplay_score", "visual_score", "overall_score"]|"overall_score"|
+|`--weighting`|Optional weighting to calculate mean average by if --sort_by is "overall_score".<br/><br/>Expects list of 4 int values.|[0, 0, 0, 1]|
+
+##### Return Functions (-f / --functions)
+
+| values | description |
+|---|---|
+| `FILTERS` |Return unique terms within a given selection of game object|
+
+#### GET COLLECTIONS
+
+| option | description | default |
+|---|---|---|
+|`--id`|Optional collection id to limit the information returned to a single collection object|None|
+|`--user_id`|Optional user id to limit the information returned to a single user's collection object|None|
+
+#### PATCH COLLECTIONS
+
+| option | description | required |
+|---|---|---|
+|`--id`|Collection id to update|True|
+|`--user_id`|Game id to add to the given collection object|True|
+
+#### DELETE COLLECTIONS
+
+| option | description | required |
+|---|---|---|
+|`--id`|Collection id to update|True|
+|`--user_id`|Game id to remove from the given collection object|Optional|
+
+### Examples
+
+To return all users:
 
 ```console
-$ python recommendation_system/cli.py -v GET -o GAMES
+$ python3 recommendation_system/cli.py -v GET -o USERS
 ```
 
-To fetch the info about a specific game you need to pass in the game_id via the -g (--game_id) argument as well, using the below command:
-
-This will print out the specific game's information to the console.
-
-If the game does not exist in the game datastore and error will be printed out to console.
-
-You don't need to be logged in to run this command and see all games.
+To add a new user (signup):
 
 ```console
-$ python recommendation_system/cli.py -v GET -o GAMES -g <game_id>
+$ python3 recommendation_system/cli.py -v POST -username joe --password jb3000 --name "Joe Bloggs" --date_of_birth "26/01/1985"
 ```
 
-#### Collections
-To fetch all collections for the logged in user run the command below:
 
-This will print out the logged in user's collections to the console if there are any collections.
-
-You  need to be logged in to see your collections.
-
-If you're not logged in the command will ask you to log in.
+To return all games of the game_type "Card Game", sorted by the mean review rating given as their "visual_score":
 
 ```console
-$ python recommendation_system/cli.py -v GET -o COLLECTIONS
+$ python3 recommendation_system/cli.py -v GET -o GAMES --game_type "Card Game" --sort_by "visual_score"
 ```
 
-### POST calls
-Post calls write/create specific information to the datastore. The function to be acted on needs to be defined via the -f (--function) argument.
+To return all unique terms found across all games for filtering purposes:
+
+```console
+$ python3 recommendation_system/cli.py -v GET -o GAMES -f FILTERS
+```
+
+To add a game to a collection:
+
+```console
+$ python3 recommendation_system/cli.py -v PATCH --id <collection_id> --game_id <game_id>
+```
+
+To remove a game from a collection:
+
+```console
+$ python3 recommendation_system/cli.py -v PATCH --id <collection_id> --game_id <game_id>
+```
+
+> TODO - UPDATE BELOW if impersonate user is desired
 
 Currently the available functions to POST are: login, logout, signup and create_collection.
 
@@ -100,93 +193,6 @@ This will remove the saved logged in user from the auth_cookies file.
 $ python recommendation_system/cli.py -v POST -f LOGOUT
 ```
 
-#### Signup
-To sign up a new account you need to pass in the following information via it's associated argument:
-
-* chosen username via -u (--username), required
-* chosen password via -p (--password), required
-* your full name via -n (--name), required. Please not this should be inside quotation if the name contains empty spaces.
-* your date of birth via -d (--date_of_birth), required. In the format of DD/MM/YYYY
-* your favourite game type via -fgt (--favourite_game_type), optional. This has to be one of the following game types: Board Game, Card Game, Role Playing Game, Miniature War Game. Please not this should be inside quotation as game type contains empty spaces.
-* your favourite game genre via -fgg (--favourite_game_type), optional
-
-The username needs to be unique, so if the username already exist the CLI will notify you via printing a message and asking you to choose a new username.
-
-If sign up is successful a success message will be orinted out with the newly created user_id. Additionally you will be automatically logged in, so no need to log in separately.
-
-example command:
-
-```console
-$ python recommendation_system/cli.py -v POST -f SIGNUP -u <username> -p <password> -n '<full_name>' -d <DD/MM/YYYY> [-fgt '<one_of_the_4_game_types>'] [-fgg <favourite_game_genre>]
-```
-
-#### Create_collections
-To create a collection you need to be logged in as you can only create a collection for yourself. There are no extra arguments needed.
-
-If you are not logged in a message will be printed out asking you to log in. 
-
-If you are logged in the command will create an empty collection for the user and print out a success message including the newly created collection_id
-
-```console
-$ python recommendation_system/cli.py -v POST -f CREATE_COLLECTION
-```
-### PUT calls
-PUT calls update specific information to the datastore.
-
-Currently the only PUT call available is to add a new game to an existing collection.
-
-#### Add a game to a collection
-To add a game to a collection you need to pass in the game ID via -g (--game_id) argument and the collection ID via the -c (--collection_id) argument.
-
-Please note that you need to be logged in to be able to add games to your collections and that you can only add games to collections you own. You can not add games to other user's collections.
-If you try to add a game to a collection you don't own a permission error will be raised.
-
-If the game already exists in a collection, a message will be printed to inform you. 
-
-If the game is successfully added to the given collection a success message will be printed out.
-
-```console
-$ python recommendation_system/cli.py -v PUT -g <game_id> -c <collection_id>
-```
-
-### DELETE calls
-DELETE calls delete specific information from the datastore. you can whether delete a whole collection of yours, or delete a game from a collection you own.
-
-#### Remove a game from a collection
-To remove a game from a collection you need to pass in the game ID via -g (--game_id) argument and the collection ID via the -c (--collection_id) argument.
-
-Please note that you need to be logged in to be able to remove games from your collections and that you can only remove games from collections you own. You can not remove games from other user's collections.
-If you try to remove a game from a collection you don't own a permission error will be raised.
-
-If the game does not exists in a collection, a message will be printed to inform you. 
-
-If the game is successfully removed from the given collection a success message will be printed out.
-
-```console
-$ python recommendation_system/cli.py -v DELETE -g <game_id> -c <collection_id>
-```
-
-#### Delete a collection
-To delete a collection you need to pass in the collection ID via the -c (--collection_id) argument.
-
-Please note that you need to be logged in to be able to delete a collection and that you can only delete collections you own. You can not delete another user's collections.
-
-If the collection is successfully deleted a success message will be printed out.
-
-```console
-$ python recommendation_system/cli.py -v DELETE -c <collection_id>
-```
-
-### DICE
-
-The recommendation system may be run on [The University of Edinburgh's Distributed Informatics Computing Environment](http://computing.help.inf.ed.ac.uk/).
-
-Python 3 is available on DICE by default, though requires all commands to use `python3` instead of `python`.
-
-```console
-$ python3 recommendation_system
-```
-
 ## Input Files
 
 ## Usability Testing
@@ -205,13 +211,13 @@ To run all tests, start pytest as a module from within the [/recommendation_syst
 
 ```console
 $ cd recommendation_system
-$ python -m pytest
+$ python3 -m pytest
 ```
 
 Alternatively, you may run a specific set of tests (for instance `example.py`) with the following:
 
 ```console
-$ python -m pytest tests/example.py
+$ python3 -m pytest tests/example.py
 ```
 
 ---
@@ -223,7 +229,7 @@ To quality check the main [recommendation_system](recommendation_system) program
 
 ```console
 $ cd recommendation_system
-$ python -m pylint recommendation_system/cli.py
+$ python3 -m pylint recommendation_system/cli.py
 ```
 
 ## Software Development Coursework
