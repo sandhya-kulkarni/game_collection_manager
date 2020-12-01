@@ -20,9 +20,10 @@ def data_frame(input_df, filter_dict):
     if type(filter_dict) != dict or len(filter_dict) == 0:
         raise TypeError("filter_dict must be a dictionary with at least one key-value pair")
     # iterate over filter keys and query by key-value pair
+    output_df = input_df
     for key in filter_dict:
         try:
-            ouput_df = input_df.query(key+'=="'+filter_dict[key]+'"')
+            output_df = output_df.query(key+'=="'+filter_dict[key]+'"')
         except NameError as err:
             raise KeyError("Invalid filter_dict given: {}".format(err)) from None
-    return ouput_df
+    return output_df
