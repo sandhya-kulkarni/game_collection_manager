@@ -63,3 +63,29 @@ def game_review_mean(game_df, review_df, sort_by="overall_score", weighting=[0, 
     return_df = pd.merge(game_df, mean_values, on="game_id")
     sorted_return = return_df.sort_values(by=["mean"], ascending=False)
     return sorted_return
+
+
+def user_normalised_reviews(review_df):
+    """
+    Returns user's normalised review scores around zero.
+    :param review_df: (pd.DataFrame) input review data (already filtered to user_id)
+    :return: normalised_df: (pd.DataFrame) user's review scores after normalisation.
+    :raises TypeError: if arguments are not as expected.
+    """
+    # test arguments:
+    if not isinstance(review_df, pd.DataFrame):
+        raise TypeError("review_df must be a valid data frame of review data")
+
+    for column in review_df.columns:
+        if column in review_terms:
+            review_df[column] = review_df[column] - review_df[column].mean()
+
+    return review_df
+
+
+review_terms = [
+    "complexity_score",
+    "gameplay_score",
+    "visual_score",
+    "overall_score",
+]

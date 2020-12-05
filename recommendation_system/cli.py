@@ -11,6 +11,7 @@ from api.config import *
 from api.games import games_help, games_usage
 from api.users import users_help, users_usage
 from api.collections import collections_help, collections_usage
+from api.recommendations import recommendations_help, recommendations_usage
 
 
 def start(args):
@@ -76,6 +77,9 @@ def start(args):
         # ADD COLLECTIONS
         if object_arg == "COLLECTIONS":
             collections_help(parser, verb_arg)
+        # ADD RECOMMENDATIONS
+        if object_arg == "RECOMMENDATIONS":
+            recommendations_help(parser, verb_arg)
 
     # will exit as soon as arguments parsed if -h is present
     parsed_arguments = parser.parse_args(args)
@@ -97,6 +101,8 @@ def start(args):
         df = users_usage(parsed_arguments)
     if object_arg == "COLLECTIONS":
         df = collections_usage(parsed_arguments)
+    if object_arg == "RECOMMENDATIONS":
+        df = recommendations_usage(parsed_arguments)
 
     # return output as directed
     if parsed_arguments.output == "JSON":
