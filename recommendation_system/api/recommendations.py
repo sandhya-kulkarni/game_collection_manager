@@ -150,6 +150,7 @@ def get_games_not_owned_by_user(user_id, rated_games):
     """
     # get user's collections and all games within it
     user_collections = get_collections(user_id=user_id)
-    games_owned_by_user = user_collections.game_ids.unique()
-    return list(set(rated_games)-set(games_owned_by_user))
+    games_owned_by_user = user_collections['game_ids'].tolist()
+    flat_games_owned_by_user = ', '.join(games_owned_by_user).split(', ')
+    return list(set(rated_games)-set(flat_games_owned_by_user))
 
